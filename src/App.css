@@ -1,0 +1,17 @@
+.content {    
+    padding: 20px;
+}
+
+.url {
+    margin-bottom: 20px !important;
+}
+
+.table-table {
+    margin-bottom: 20px !important;
+}
+
+.input-row {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-gap: 15px;
+}
