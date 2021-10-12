@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Button, Input, PageHeader, Descriptions, Collapse, Tag, message } from "antd";
-import { CloseCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { v4 as uuid } from 'uuid';
 import './Connection.css'
 
 const { Panel } = Collapse;
 
-function Connection({ url, uuid, add }) {
+function Connection({ url, id, add, remove }) {
 	const [connection, setConnection] = useState();
 	const [text, setText] = useState('');
 	const [sent, setSent] = useState([]);
@@ -15,7 +16,7 @@ function Connection({ url, uuid, add }) {
 	const send = () => {
 		if (status.connected) {
 			connection.send(JSON.stringify(text.trim()));
-			setSent([...sent, { text: text.trim(), timestamp: (new Date()).valueOf(), key: sent.length }]);
+			setSent([...sent, { text: text.trim(), timestamp: (new Date()).valueOf(), key: uuid() }]);
 			setText('');
 		} else {
 			message.error("Couldn't send message: Connection not opened (yet)")
@@ -44,7 +45,7 @@ function Connection({ url, uuid, add }) {
 				setStatus({ ...status, connected: false })
 			}
 			connection.onmessage = (e) => {
-				setReceived([{ text: e.data, timestamp: e.timeStamp, key: received.length }, ...received]);
+				setReceived([{ text: e.data, timestamp: e.timeStamp, key: uuid() }, ...received]);
 			}
 		}
 	});
@@ -57,9 +58,13 @@ function Connection({ url, uuid, add }) {
 					(status.connected) ? <Tag color="green">Online</Tag> : <Tag color="red">Offline</Tag>
 				}
 				className='websocket-header'
-				title={`${uuid}`}
+				title={`${id}`}
 				extra={[
-					<Button type='primary' danger onClick={exit} icon={<CloseCircleOutlined />} disabled={!status.connected}>Close</Button>,
+					<span>{
+						(connection)
+							? <Button type='primary' danger onClick={exit} icon={<CloseCircleOutlined />} disabled={!status.connected}>Close</Button>
+							: <Button type='primary' danger onClick={() => { exit(); remove(id); }} icon={<MinusCircleOutlined />}>Remove</Button>
+					}</span>,
 					<Button onClick={() => add(url)} icon={<PlusCircleOutlined />}>Duplicate</Button>
 
 				]}>
@@ -99,7 +104,7 @@ function Connection({ url, uuid, add }) {
 					</Panel>
 				</Collapse>
 			</PageHeader>
-		</div>
+		</div >
 	);
 }
 

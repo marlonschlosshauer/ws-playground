@@ -10,7 +10,8 @@ function App() {
 	const [url, setURL] = useState('ws://localhost:8999/connection');
 	const [connections, setConnections] = useState([]);
 
-	const addConnection = (u) => setConnections([{ url: u, uuid: uuid(), key: connections.length, index: connections.length }, ...connections]);
+	const addConnection = (u) => setConnections([{ url: u, id: uuid(), key: uuid()}, ...connections]);
+	const removeConnection = (i) => setConnections(connections.filter(c => c.id !== i));
 
 	return (
 		<div className="App">
@@ -21,7 +22,7 @@ function App() {
 						<Button className='url-input-add' onClick={() => addConnection(url)}>Add connection</Button>
 					</div>
 					<div className="table">
-						{connections.map(c => <Connection {...c} add={addConnection} />)}
+						{connections.map(c => <Connection {...c} add={addConnection} remove={removeConnection} />)}
 					</div>
 				</Content>
 			</Layout>
