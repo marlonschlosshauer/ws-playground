@@ -10,7 +10,7 @@ function App() {
 	const [url, setURL] = useState('ws://localhost:8999/connection');
 	const [connections, setConnections] = useState([]);
 
-	const addConnection = (u) => setConnections([{ url: u, uuid: uuid(), key: connections.length, index: connections.length }, ...connections])
+	const addConnection = (u) => setConnections([{ url: u, uuid: uuid(), key: connections.length, index: connections.length }, ...connections]);
 
 	return (
 		<div className="App">
