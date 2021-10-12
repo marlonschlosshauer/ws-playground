@@ -1,0 +1,38 @@
+.websocket-header-wrapper {
+    padding: 24px;
+    background-color: #f5f5f5;
+    max-width: 1600px;
+}
+
+.websocket-header {
+    background-color: white;
+}
+
+.message-display {
+    padding: 15px;
+    background-color: black;
+    color: #59fc53;
+}
+
+.websocket-input-container {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    grid-gap: 20px;
+    justify-content: center;
+}
+
+.websocket-input {
+}
+
+.websocket-input-send {
+    width: 100px;
+}
+
+.websocket-input-length-counter {
+    font-size: 80%;
+    color: lightgrey;
+}
+
+.websocket-input-wrapper {
+    padding: 20px 0;
+}
